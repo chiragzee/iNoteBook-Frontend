@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 let Login = (props) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const navigate = useNavigate();
-
+  const host = "https://inotebook-server-pp25.onrender.com"
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('https://inotebook-server-pp25.onrender.com/api/auth/login', {
+    const response = await fetch(`${host}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
