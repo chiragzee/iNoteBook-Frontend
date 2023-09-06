@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-let Login = (props) => {
+const Login = (props) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const navigate = useNavigate();
-  const host = "https://inotebook-server-pp25.onrender.com"
+  const host = 'https://inotebook-server-pp25.onrender.com';
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch(`${host}/api/auth/login`, {
@@ -17,13 +31,12 @@ let Login = (props) => {
     const json = await response.json();
     console.log(json);
     if (json.success) {
-      // redirect
+      // Redirect
       localStorage.setItem('token', json.authtoken);
       navigate('/'); // Use navigate to go to the desired route
-      props.showAlert("Logged in","success")
+      props.showAlert('Logged in', 'success');
     } else {
-      props.showAlert("Invalid Credentials","danger")
-
+      props.showAlert('Invalid Credentials', 'danger');
     }
   };
 
@@ -31,44 +44,79 @@ let Login = (props) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
+  const theme = createTheme();
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            value={credentials.email}
-            onChange={onChange}
-            id="email"
-            name="email"
-            aria-describedby="emailHelp"
-          />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            value={credentials.password}
-            onChange={onChange}
-            name="password"
-            id="password"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign In
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={credentials.email}
+              onChange={onChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={credentials.password}
+              onChange={onChange}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="/signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 };
 

@@ -21,18 +21,24 @@ const App = () => {
       setAlert(null);
     },1500);
 }
+
   return (
     <>
       <NoteState>
         <BrowserRouter>
           <Navbar />
           <Alert alert={alert}/>
+          <div>
+            <Routes>
+            <Route path="/signup" element={<Signup showAlert={showAlert}/>} />
+            </Routes>
+          </div>
           <div className="container">
             <Routes>
               <Route path="/" element={<Home  showAlert={showAlert}/>} />
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login showAlert={showAlert}/>} />
-              <Route path="/signup" element={<Signup showAlert={showAlert}/>} />
+              
             </Routes>
           </div>
         </BrowserRouter>

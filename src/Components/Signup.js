@@ -1,10 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const Signup = (props) => {
-  const [credentials, setCredentials] = useState({ name: '', email: '', password: '', cpassword: '' });
-  const navigate = useNavigate(); 
-  const host = "https://inotebook-server-pp25.onrender.com"
+  const [credentials, setCredentials] = useState({
+    name: '',
+    email: '',
+    password: '',
+    cpassword: '',
+  });
+  const navigate = useNavigate();
+  const host = 'https://inotebook-server-pp25.onrender.com';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,14 +39,12 @@ const Signup = (props) => {
     const json = await response.json();
     console.log(json);
 
-    // Redirect if successful (you should handle errors appropriately)
     if (json.authtoken) {
       localStorage.setItem('token', json.authtoken);
       navigate('/');
-      props.showAlert("Succesfully Signed Up","success")
-    }
-    else{
-      props.showAlert("Invalid Creds","danger")
+      props.showAlert('Successfully Signed Up', 'success');
+    } else {
+      props.showAlert('Invalid Credentials', 'danger');
     }
   };
 
@@ -37,28 +53,104 @@ const Signup = (props) => {
   };
 
   return (
-    <div className="container">
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">Name</label>
-          <input type="name" className="form-control" id="name" name="name" onChange={onChange} aria-describedby="emailHelp" />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
-          <input type="email" className="form-control" id="email" name="email" onChange={onChange} aria-describedby="emailHelp" />
-          <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
-          <input type="password" className="form-control" id="password" name="password" onChange={onChange} minLength={5} required />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="cpassword" className="form-label">Confirm Password</label>
-          <input type="password" className="form-control" id="cpassword" name="cpassword" onChange={onChange} minLength={5} required />
-        </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
-    </div>
+    <ThemeProvider theme={createTheme()}>
+      <Grid container component="main" sx={{ height: '100%' , width:'100%'}}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            
+            backgroundImage: 'url("/images/BG.jpg")',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              height: '100%',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign Up
+            </Typography>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Name"
+                name="name"
+                autoComplete="name"
+                autoFocus
+                onChange={onChange}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                onChange={onChange}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+                onChange={onChange}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="cpassword"
+                label="Confirm Password"
+                type="password"
+                id="cpassword"
+                autoComplete="new-password"
+                onChange={onChange}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                Sign Up
+              </Button>
+              <Grid container>
+                <Grid item>
+                  <Link href="/login" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
 };
 

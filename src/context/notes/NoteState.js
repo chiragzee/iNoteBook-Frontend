@@ -4,33 +4,7 @@ import { useState } from "react";
 const NoteState = (props) => {
   const host = "https://inotebook-server-pp25.onrender.com"
   const notesinitial = [
-    {
-      "_id": "6488dd53a0daae5e036800ea1",
-      "user": "6488c6b5d62e3a13e6ea0bc0",
-      "title": "My Title",
-      "description": "Please wake up",
-      "tag": "personal",
-      "date": "2023-06-13T21:19:15.872Z",
-      "__v": 0
-    },
-    {
-      "_id": "6488dd54a01daae5e036800ec",
-      "user": "6488c6b5d62e3a13e6ea0bc0",
-      "title": "My Title",
-      "description": "Please wake up",
-      "tag": "personal",
-      "date": "2023-06-13T21:19:16.680Z",
-      "__v": 0
-    },
-    {
-      "_id": "6488dec88702dd296a018f2fc",
-      "user": "6488c6b5d62e3a13e6ea0bc0",
-      "title": "My Title",
-      "description": "Please wake up",
-      "tag": "personal",
-      "date": "2023-06-13T21:25:28.855Z",
-      "__v": 0
-    }
+    
   ]
 
   const [Notes, setNotes] = useState(notesinitial)
