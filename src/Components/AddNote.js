@@ -17,7 +17,7 @@ const AddNote = () => {
   
   return (
     <div className="container my-3" >
-      <h1 style={{color:"#fff"}}>Add a note</h1>
+      <h1>Add a note</h1>
       <form>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
