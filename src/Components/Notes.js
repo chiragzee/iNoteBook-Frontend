@@ -96,9 +96,9 @@ const Notes = () => {
           />
         </div>
 
-        <button type="submit" className="btn btn-primary" onClick={handleClick}>
-          Add Note
-        </button>
+        // <button type="submit" className="btn btn-primary" onClick={handleClick}>
+        //   Add Note
+        // </button>
       </form>
       </div>
       <div className="modal-footer">
